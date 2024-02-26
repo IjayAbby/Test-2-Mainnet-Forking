@@ -13,11 +13,11 @@ const main = async () => {
     await helpers.impersonateAccount(address);
     const impersonatedSigner = await ethers.getSigner(address);
 
-    const amountADesired = ethers.parseUnits("2000", 6);
-    const amountBDesired = ethers.parseUnits("1000000", 18);
+    const amountADesired = ethers.parseUnits("200000", 6);
+    const amountBDesired = ethers.parseUnits("20000000000000000000", 18);
 
-    const amountAMin = ethers.parseUnits("1999", 6);
-    const amountBMin = ethers.parseUnits("99000", 18);
+    const amountAMin = 0;
+    const amountBMin = 0;
 
     const USDC = await ethers.getContractAt("IERC20", USDCAddress);
     const DAI = await ethers.getContractAt("IERC20", DAIAddress);
@@ -28,7 +28,7 @@ const main = async () => {
     const approveTxA = await USDC.connect(impersonatedSigner).approve(UNIRouter, amountADesired);
     await approveTxA.wait();
 
-    const approveTxB = await USDC.connect(impersonatedSigner).approve(UNIRouter, amountBDesired);
+    const approveTxB = await DAI.connect(impersonatedSigner).approve(UNIRouter, amountBDesired);
     await approveTxB.wait();
 
     const ethBal = await impersonatedSigner.provider.getBalance(address);
@@ -52,7 +52,7 @@ const main = async () => {
         amountBDesired,
         amountAMin,
         amountBMin,
-        UNIRouter,
+        impersonatedSigner.address,
         deadline
     );
 
