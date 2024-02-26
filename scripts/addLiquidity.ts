@@ -14,10 +14,10 @@ const main = async () => {
     const impersonatedSigner = await ethers.getSigner(address);
 
     const amountADesired = ethers.parseUnits("2000", 6);
-    const amountBDesired = ethers.parseUnits("100", 18);
+    const amountBDesired = ethers.parseUnits("1000000", 18);
 
     const amountAMin = ethers.parseUnits("1999", 6);
-    const amountBMin = ethers.parseUnits("99", 18);
+    const amountBMin = ethers.parseUnits("99000", 18);
 
     const USDC = await ethers.getContractAt("IERC20", USDCAddress);
     const DAI = await ethers.getContractAt("IERC20", DAIAddress);
